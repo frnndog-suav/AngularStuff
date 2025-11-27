@@ -5,3 +5,9 @@
 html {
   font-family: 'Archivo', sans-serif;
 }
+
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

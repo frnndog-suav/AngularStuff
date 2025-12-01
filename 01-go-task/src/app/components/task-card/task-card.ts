@@ -11,6 +11,9 @@ export class TaskCard {
   readonly _modalControllerService = inject(ModalControllerService);
 
   openModal() {
-    this._modalControllerService.openEditTaskModal();
+    this._modalControllerService.openEditTaskModal({
+      name: 'Nome da tarefa',
+      description: 'Descrição da tarefa',
+    });
   }
 }

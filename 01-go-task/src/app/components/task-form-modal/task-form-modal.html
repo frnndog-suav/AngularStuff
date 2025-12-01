@@ -6,7 +6,7 @@
   <div class="flex gap-1 items-center p-4">
     <img src="images/icon-new-task.svg" />
     <h1 class="font-semibold text-lg">{{ modalTitle }}</h1>
-    <img class="ml-auto cursor-pointer" src="images/icon-close.svg" />
+    <img class="ml-auto cursor-pointer" src="images/icon-close.svg" (click)="closeModal()" />
   </div>
 
   <div class="p-4 border-y border-[#d1d5db] flex flex-col gap-4">
@@ -18,9 +18,11 @@
         placeholder="Descreva o que deverá ser feito"
         formControlName="name"
       />
-      <p class="font-semibold text-sm text-red-500">
-        O campo é obrigatório e precisa te no mínimo 10 caracteres.
-      </p>
+      @if (taskForm.get('name')?.touched && taskForm.get('name')?.invalid) {
+        <p class="font-semibold text-sm text-red-500">
+          O campo é obrigatório e precisa te no mínimo 10 caracteres.
+        </p>
+      }
     </div>
 
     <div>
@@ -41,11 +43,22 @@
     <button
       class="py-3 px-4 bg-[#fafafa] rounded-xl text-sm font-semibold cursor-pointer active:translate-y-1 transition-transform duration-75"
       type="button"
+      (click)="closeModal()"
     >
       Cancelar
     </button>
     <button
-      class="{{`py-3 px-4 rounded-xl text-white text-sm font-semibold cursor-pointer ${taskForm.invalid ? 'bg-[#d7d8d8]' : 'bg-[#2a89ef] active:translate-y-1 transition-transform duration-75 shadow-md shadow-blue-500/50'}`}}"
+      class="{{
+        `
+        py-3 
+        px-4 
+        text-sm 
+        rounded-xl
+        font-semibold 
+        cursor-pointer 
+        text-white 
+         ${taskForm.invalid ? 'bg-[#d7d8d8]' : 'bg-[#2a89ef] active:translate-y-1 transition-transform duration-75 shadow-md shadow-blue-500/50'}`
+      }}"
       type="submit"
       [disabled]="taskForm.invalid"
     >

@@ -16,8 +16,9 @@ export class ModalControllerService {
   };
 
   openNewTaskModal() {
-    return this._dialog.open(TaskFormModal, {
+    return this._dialog.open<TTaskFormControls>(TaskFormModal, {
       ...this._modalSizeOptions,
+      disableClose: true,
       data: {
         mode: MODAL_MODE.CREATE,
         formValues: { name: '', description: '' } satisfies TTaskFormControls,
@@ -26,8 +27,9 @@ export class ModalControllerService {
   }
 
   openEditTaskModal(formValues: TTaskFormControls) {
-    return this._dialog.open(TaskFormModal, {
+    return this._dialog.open<TTaskFormControls>(TaskFormModal, {
       ...this._modalSizeOptions,
+      disableClose: true,
       data: {
         formValues,
         mode: MODAL_MODE.EDIT,

@@ -6,5 +6,5 @@ export type TTask = {
   name: string;
   description: string;
   comments: TComment[];
-  status: keyof typeof TASK_STATUS;
+  status: (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
 };

@@ -1,7 +1,7 @@
 <form class="rounded-xl overflow-hidden bg-white">
   <div class="flex gap-1 items-center p-4">
     <img src="images/icon-new-task.svg" />
-    <h1 class="font-semibold text-lg">Criar/Editar tarefa</h1>
+    <h1 class="font-semibold text-lg">{{ modalTitle }}</h1>
     <img class="ml-auto cursor-pointer" src="images/icon-close.svg" />
   </div>
 
@@ -42,7 +42,7 @@
       class="py-3 px-4 bg-[#2a89ef] text-white rounded-xl text-sm font-semibold cursor-pointer active:translate-y-1 transition-transform duration-75 shadow-md dhadow-blue-500/50"
       type="submit"
     >
-      Criar uma tarefa
+      {{ buttonLabel }}
     </button>
   </div>
 </form>

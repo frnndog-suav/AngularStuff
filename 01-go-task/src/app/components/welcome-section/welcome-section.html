@@ -1,4 +1,6 @@
-<div class="rounded-2xl p-8 bg-[#ECF4FE] flex flex-col gap-7 sm:flex-row-reverse sm:justify-between sm:items-center">
+<div
+  class="rounded-2xl p-8 bg-[#ECF4FE] flex flex-col gap-7 sm:flex-row-reverse sm:justify-between sm:items-center"
+>
   <div>
     <img src="images/icon-hand-coding.svg" />
   </div>
@@ -12,23 +14,8 @@
     </div>
     <div>
       <button
-        class="
-        bg-[#2a89ef] 
-        shadow-md 
-        shadow-blue-500/50 
-        py-3 
-        px-4 
-        rounded-xl 
-        text-white 
-        text-sm 
-        font-semibold 
-        text-center 
-        flex gap-2 
-        cursor-pointer 
-        active:translate-y-1 
-        transition-transform 
-        duration-75        
-        "
+        class="bg-[#2a89ef] shadow-md shadow-blue-500/50 py-3 px-4 rounded-xl text-white text-sm font-semibold text-center flex gap-2 cursor-pointer active:translate-y-1 transition-transform duration-75"
+        (click)="openModal()"
       >
         <img src="images/icon-plus-circle.svg" />
         Criar uma tarefa

@@ -18,11 +18,11 @@ export class TaskFormModal {
     this._data.mode === MODAL_MODE.CREATE ? 'Criar tarefa' : 'Salvar alterações';
 
   taskForm: FormGroup = new FormGroup({
+    description: new FormControl(this._data.formValues.description),
     name: new FormControl(this._data.formValues.name, [
       Validators.required,
       Validators.minLength(10),
     ]),
-    description: new FormControl(this._data.formValues.description),
   });
 
   onFormSubmit() {

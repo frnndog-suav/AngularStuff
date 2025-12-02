@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ModalControllerService } from '../../services/modal-controller.service';
+import { TTask } from '../../type/task';
 
 @Component({
   selector: 'app-task-card',
@@ -8,6 +9,8 @@ import { ModalControllerService } from '../../services/modal-controller.service'
   styleUrl: './task-card.css',
 })
 export class TaskCard {
+  @Input({ required: true }) task!: TTask;
+
   readonly _modalControllerService = inject(ModalControllerService);
 
   openModal() {

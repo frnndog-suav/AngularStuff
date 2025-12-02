@@ -1,5 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TComment } from '../../type/comment';
 import { TTask } from '../../type/task';
@@ -18,6 +18,8 @@ export class TaskCommentsModal {
   readonly _task: TTask = inject(DIALOG_DATA);
   readonly _dialogRef: DialogRef<boolean> = inject(DialogRef);
 
+  @ViewChild('commentInput') commentInputRef!: ElementRef<HTMLInputElement>;
+
   onAddComment() {
     const newComment: TComment = {
       id: generateUniqueIdWithTimestamp(),
@@ -29,6 +31,8 @@ export class TaskCommentsModal {
     this.commentControl.reset();
 
     this.taskCommentsChanged = true;
+
+    this.commentInputRef.nativeElement.focus();
   }
 
   onCloseModal() {

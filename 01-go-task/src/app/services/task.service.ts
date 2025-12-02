@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
-import { TASK_STATUS } from '../enums/task-status';
+import { TASK_STATUS, TTaskStatus } from '../enums/task-status';
 import { TTask } from '../type/task';
 import { TTaskFormControls } from '../type/task-form-controls';
 import { generateUniqueIdWithTimestamp } from '../utils/generate-unique-id-with-timestamp';
@@ -29,5 +29,37 @@ export class TaskService {
     const currentList = this.todoTasks$.getValue();
 
     this.todoTasks$.next([...currentList, newTask]);
+  }
+
+  updateTaskStatus(
+    taskId: string,
+    taskCurrentStatus: TTaskStatus,
+    taskNextStatus: TTaskStatus,
+  ): void {
+    const currentTaskList = this.getTaskListByStatus(taskCurrentStatus);
+    const nextTaskList = this.getTaskListByStatus(taskNextStatus);
+    const currentTask = currentTaskList.getValue().find((task) => task.id === taskId);
+
+    if (currentTask) {
+      currentTask.status = taskNextStatus;
+
+      const currentTaskListWithoutTask = currentTaskList
+        .value
+        .filter((task) => task.id !== taskId);
+
+      currentTaskList.next([...currentTaskListWithoutTask]);
+
+      nextTaskList.next([...nextTaskList.value, currentTask]);
+    }
+  }
+
+  private getTaskListByStatus(status: TTaskStatus) {
+    const taskListObj = {
+      [TASK_STATUS.TODO]: this.todoTasks$,
+      [TASK_STATUS.DOING]: this.doingTasks$,
+      [TASK_STATUS.DONE]: this.doneTasks$,
+    };
+
+    return taskListObj[status];
   }
 }

@@ -1,4 +1,4 @@
-import { TASK_STATUS } from '../enums/task-status';
+import { TTaskStatus } from '../enums/task-status';
 import { TComment } from './comment';
 
 export type TTask = {
@@ -6,5 +6,5 @@ export type TTask = {
   name: string;
   description: string;
   comments: TComment[];
-  status: (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
+  status: TTaskStatus;
 };

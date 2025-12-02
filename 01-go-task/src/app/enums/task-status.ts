@@ -3,3 +3,5 @@ export const TASK_STATUS = {
   DOING: 'doing',
   DONE: 'done',
 } as const;
+
+export type TTaskStatus = typeof TASK_STATUS[keyof typeof TASK_STATUS]

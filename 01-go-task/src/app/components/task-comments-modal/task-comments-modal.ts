@@ -38,4 +38,9 @@ export class TaskCommentsModal {
   onCloseModal() {
     this._dialogRef.close(this.taskCommentsChanged);
   }
+
+  onRemoveModal(commentId: string) {
+    this._task.comments = this._task.comments.filter((comment) => comment.id !== commentId);
+    this.taskCommentsChanged = true;
+  }
 }

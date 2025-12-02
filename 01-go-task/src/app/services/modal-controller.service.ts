@@ -39,7 +39,7 @@ export class ModalControllerService {
   }
 
   openTaskCommentsModal(task: TTask) {
-    return this._dialog.open(TaskCommentsModal, {
+    return this._dialog.open<boolean>(TaskCommentsModal, {
       ...this._modalSizeOptions,
       disableClose: true,
       data: task,

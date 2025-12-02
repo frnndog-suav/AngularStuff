@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { TaskCommentsModal } from '../components/task-comments-modal/task-comments-modal';
 import { TaskFormModal } from '../components/task-form-modal/task-form-modal';
 import { TTaskFormControls } from '../type/task-form-controls';
-import { MODAL_MODE } from '../type/task-form-modal';
+import { MODAL_MODE } from '../enums/modal-mode';
 
 @Injectable({
   providedIn: 'root',

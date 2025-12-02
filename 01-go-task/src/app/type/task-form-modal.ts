@@ -3,5 +3,5 @@ import { TTaskFormControls } from './task-form-controls';
 
 export type TTaskFormModalData = {
   formValues: TTaskFormControls;
-  mode: keyof typeof MODAL_MODE;
+  mode: (typeof MODAL_MODE)[keyof typeof MODAL_MODE];
 };

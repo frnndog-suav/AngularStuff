@@ -1,8 +1,9 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MODAL_MODE } from '../../enums/modal-mode';
 import { TTaskFormControls } from '../../type/task-form-controls';
-import { MODAL_MODE, TTaskFormModalData } from '../../type/task-form-modal';
+import { TTaskFormModalData } from '../../type/task-form-modal';
 
 @Component({
   selector: 'app-task-form-modal',

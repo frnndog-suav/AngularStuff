@@ -18,18 +18,15 @@ import { TaskCard } from '../task-card/task-card';
   styleUrl: './task-list-section.css',
 })
 export class TaskListSection {
-  private readonly _taskService = inject(TaskService);
-  readonly todoTasks$ = this._taskService.todoTasks;
-  readonly doneTasks$ = this._taskService.doneTasks;
-  readonly doingTasks$ = this._taskService.doingTasks;
+  readonly _taskService = inject(TaskService);
 
-  drop(event: CdkDragDrop<TTask[] | null>) {
+  drop(event: CdkDragDrop<TTask[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data ?? [], event.previousIndex, event.currentIndex);
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(
-        event.previousContainer.data ?? [],
-        event.container.data ?? [],
+        event.previousContainer.data,
+        event.container.data,
         event.previousIndex,
         event.currentIndex,
       );

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { TASK_STATUS, TTaskStatus } from '../enums/task-status';
+import { TComment } from '../type/comment';
 import { TTask } from '../type/task';
 import { TTaskFormControls } from '../type/task-form-controls';
 import { generateUniqueIdWithTimestamp } from '../utils/generate-unique-id-with-timestamp';
@@ -51,7 +52,12 @@ export class TaskService {
     }
   }
 
-  updateTaskNameAndDescription(taskId: string, taskCurrentStatus: TTaskStatus, newTaskName: string, newTaskDescription: string) {
+  updateTaskNameAndDescription(
+    taskId: string,
+    taskCurrentStatus: TTaskStatus,
+    newTaskName: string,
+    newTaskDescription: string,
+  ) {
     const currentTaskList = this.getTaskListByStatus(taskCurrentStatus);
     const currentTaskIndex = currentTaskList.value.findIndex((task) => task.id === taskId);
 
@@ -62,7 +68,23 @@ export class TaskService {
         name: newTaskName,
         description: newTaskDescription,
       };
-      
+
+      currentTaskList.next(updatedTaskList);
+    }
+  }
+
+  updateTaskComments(taskId: string, taskCurrentStatus: TTaskStatus, newComments: TComment[]) {
+    const currentTaskList = this.getTaskListByStatus(taskCurrentStatus);
+    const currentTaskIndex = currentTaskList.value.findIndex((task) => task.id === taskId);
+
+    if (currentTaskIndex > -1) {
+      const updatedTaskList = [...currentTaskList.value];
+
+      updatedTaskList[currentTaskIndex] = {
+        ...updatedTaskList[currentTaskIndex],
+        comments: newComments,
+      };
+
       currentTaskList.next(updatedTaskList);
     }
   }

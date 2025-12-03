@@ -32,7 +32,6 @@ export class TaskCommentsModal {
       description: this.commentControl.value ?? '',
     };
 
-    // this._task.comments.unshift(newComment);
     this._taskComments.unshift(newComment);
 
     this.commentControl.reset();
@@ -49,10 +48,7 @@ export class TaskCommentsModal {
     });
   }
 
-  onRemoveModal(commentId: string) {
-    // this._task.comments = this._task.comments.filter((comment) => comment.id !== commentId);
-    // this.taskCommentsChanged = true;
-
+  onRemoveComment(commentId: string) {
     const index = this._taskComments.findIndex((comment) => comment.id === commentId);
     if (index > -1) {
       this._taskComments.splice(index, 1);

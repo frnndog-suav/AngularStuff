@@ -10,17 +10,23 @@ import { generateUniqueIdWithTimestamp } from '../utils/generate-unique-id-with-
   providedIn: 'root',
 })
 export class TaskService {
-  private todoTasks$ = new BehaviorSubject<TTask[]>([]);
+  private todoTasks$ = new BehaviorSubject<TTask[]>(
+    this.loadTasksFromLocalStorage(TASK_STATUS.TODO),
+  );
   readonly todoTasks = this.todoTasks$.asObservable().pipe(
     map((tasks) => structuredClone(tasks)),
     tap((tasks) => this.saveTasksOnLocalStorage(TASK_STATUS.TODO, tasks)),
   );
-  private doingTasks$ = new BehaviorSubject<TTask[]>([]);
+  private doingTasks$ = new BehaviorSubject<TTask[]>(
+    this.loadTasksFromLocalStorage(TASK_STATUS.DOING),
+  );
   readonly doingTasks = this.doingTasks$.asObservable().pipe(
     map((tasks) => structuredClone(tasks)),
     tap((tasks) => this.saveTasksOnLocalStorage(TASK_STATUS.DOING, tasks)),
   );
-  private doneTasks$ = new BehaviorSubject<TTask[]>([]);
+  private doneTasks$ = new BehaviorSubject<TTask[]>(
+    this.loadTasksFromLocalStorage(TASK_STATUS.DONE),
+  );
   readonly doneTasks = this.doneTasks$.asObservable().pipe(
     map((tasks) => structuredClone(tasks)),
     tap((tasks) => this.saveTasksOnLocalStorage(TASK_STATUS.DONE, tasks)),
@@ -101,6 +107,17 @@ export class TaskService {
 
     const updatedTaskList = currentTaskList.value.filter((task) => task.id !== taskId);
     currentTaskList.next(updatedTaskList);
+  }
+
+  private loadTasksFromLocalStorage(key: string) {
+    try {
+      const storageTasks = localStorage.getItem(key);
+
+      return storageTasks ? (JSON.parse(storageTasks) satisfies TTask[]) : [];
+    } catch (error) {
+      console.log('Error ao carregar tarefas do localStorage:', error);
+      return [];
+    }
   }
 
   private saveTasksOnLocalStorage(key: string, tasks: TTask[]) {

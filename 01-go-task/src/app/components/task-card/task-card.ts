@@ -43,4 +43,8 @@ export class TaskCard {
       }
     });
   }
+
+  deleteTask() {
+    this._taskService.deleteTask(this.task.id, this.task.status);
+  }
 }

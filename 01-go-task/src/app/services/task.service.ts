@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { TASK_STATUS, TTaskStatus } from '../enums/task-status';
 import { TComment } from '../type/comment';
 import { TTask } from '../type/task';
@@ -11,13 +11,20 @@ import { generateUniqueIdWithTimestamp } from '../utils/generate-unique-id-with-
 })
 export class TaskService {
   private todoTasks$ = new BehaviorSubject<TTask[]>([]);
-  readonly todoTasks = this.todoTasks$.asObservable().pipe(map((tasks) => structuredClone(tasks)));
+  readonly todoTasks = this.todoTasks$.asObservable().pipe(
+    map((tasks) => structuredClone(tasks)),
+    tap((tasks) => this.saveTasksOnLocalStorage(TASK_STATUS.TODO, tasks)),
+  );
   private doingTasks$ = new BehaviorSubject<TTask[]>([]);
-  readonly doingTasks = this.doingTasks$
-    .asObservable()
-    .pipe(map((tasks) => structuredClone(tasks)));
+  readonly doingTasks = this.doingTasks$.asObservable().pipe(
+    map((tasks) => structuredClone(tasks)),
+    tap((tasks) => this.saveTasksOnLocalStorage(TASK_STATUS.DOING, tasks)),
+  );
   private doneTasks$ = new BehaviorSubject<TTask[]>([]);
-  readonly doneTasks = this.doneTasks$.asObservable().pipe(map((tasks) => structuredClone(tasks)));
+  readonly doneTasks = this.doneTasks$.asObservable().pipe(
+    map((tasks) => structuredClone(tasks)),
+    tap((tasks) => this.saveTasksOnLocalStorage(TASK_STATUS.DONE, tasks)),
+  );
 
   addTask(task: TTaskFormControls): void {
     const newTask: TTask = {
@@ -94,6 +101,14 @@ export class TaskService {
 
     const updatedTaskList = currentTaskList.value.filter((task) => task.id !== taskId);
     currentTaskList.next(updatedTaskList);
+  }
+
+  private saveTasksOnLocalStorage(key: string, tasks: TTask[]) {
+    try {
+      localStorage.setItem(key, JSON.stringify(tasks));
+    } catch (error) {
+      console.log('Error ao salvar tarefas no localStorage:', error);
+    }
   }
 
   private getTaskListByStatus(status: TTaskStatus) {

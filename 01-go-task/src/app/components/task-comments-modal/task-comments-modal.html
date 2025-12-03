@@ -43,7 +43,7 @@
         </button>
       </div>
       <div class="flex flex-col gap-5 overflow-scroll max-h-44 scrollbar-hidden">
-        @for (comment of _task.comments; track comment.id; let last = $last) {
+        @for (comment of _taskComments; track comment.id; let last = $last) {
           <!-- --------- -->
           <div class="{{ `flex flex-col gap-3 ${!last ? 'border-b border-[#d1d5db]' : ''}` }}">
             <div>
